@@ -1,0 +1,30 @@
+PENJELASAN TEKNIS HALAMAN LOGIN & REGISTER FLIP
+
+Halaman ini menggabungkan Form Login dan Register ke dalam satu tampilan dengan efek animasi balik buku (3D Flip).
+
+KOMPONEN UTAMA:
+1. Container "Flip Card":
+   - Menggunakan CSS 3D Transform (perspective, rotateY).
+   - Memiliki dua sisi: 'front' (Login) dan 'back' (Register).
+   - State 'flipped' dikontrol menggunakan JavaScript sederhana (menambah/menghapus class CSS).
+
+2. Elemen Visual:
+   - "E-Canteen Web Portal" di pojok kiri atas.
+   - Logo E-Canteen di pojok kanan atas.
+   - Aksen lingkaran melengkung (rounded shape) di pojok kiri atas untuk estetika.
+   - Karakter Koki (Ilustrasi SVG) di samping masing-masing form.
+
+3. Teknologi:
+   - Tailwind CSS: Digunakan untuk layouting, pewarnaan, dan styling dasar.
+   - FontAwesome/Lucide: Digunakan untuk icon input (bukan emoji).
+   - Alpine.js (atau Vanilla JS): Untuk menangani transis klik antara "Sign Up" dan "Log In".
+
+CARA KERJA ANIMASI:
+- Secara default, card menampilkan sisi depan (Login).
+- Saat link "Sign Up" diklik, JavaScript akan menambahkan class 'is-flipped' pada container utama.
+- CSS akan memutar container sebesar 180 derajat pada sumbu Y (rotateY), menampilkan sisi belakang (Register) yang sebelumnya tersembunyi.
+- Begitu pula sebaliknya saat klik "Log In" di card Register.
+
+STRUKTUR FILE:
+- login.blade.php: Berisi HTML/Blade untuk kedua form dan script animasi.
+- app.css: Berisi custom CSS untuk efek 3D flip.

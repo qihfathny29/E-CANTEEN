@@ -1,0 +1,54 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+    /* Perspective for the 3D effect */
+    .perspective-1000 {
+        perspective: 1000px;
+    }
+
+    /* The flip card container */
+    .flip-card-inner {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        transition: transform 0.8s;
+        transform-style: preserve-3d;
+    }
+
+    /* Flip transition class */
+    .is-flipped {
+        transform: rotateY(180deg);
+    }
+
+    /* Front and Back of the card */
+    .flip-card-front, .flip-card-back {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        -webkit-backface-visibility: hidden;
+        backface-visibility: hidden;
+        display: flex;
+        border-radius: 1.5rem; /* rounded-3xl */
+        overflow: hidden;
+    }
+
+    /* Back side must be pre-rotated */
+    .flip-card-back {
+        transform: rotateY(180deg);
+    }
+
+    /* Custom shadow and glass effect */
+    .glass-card {
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    /* Custom accent shapes */
+    .accent-shape {
+        background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+        opacity: 0.15;
+    }
+}
