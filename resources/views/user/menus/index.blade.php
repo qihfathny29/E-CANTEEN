@@ -93,11 +93,11 @@
 
     {{-- Menu grid --}}
     <div class="menu-grid" id="menu-grid">
-        @foreach($menus as $menu)
+        @forelse($menus as $menu)
         <div class="menu-card"
              data-cat="{{ $menu->kategori }}"
              data-pedas="{{ $menu->is_pedas ? 'pedas' : 'tidak_pedas' }}"
-             data-status="{{ $menu->status }}"
+             data-status="{{ $menu->stock > 0 ? 'tersedia' : 'habis' }}"
              data-id="{{ $menu->id }}"
              data-nama="{{ $menu->nama_menu }}"
              data-harga="{{ (int) $menu->harga }}"
@@ -109,9 +109,13 @@
                     <div class="menu-img-placeholder"><i class="fas fa-bowl-food" style="font-size:2rem;color:var(--text-muted);"></i></div>
                 @endif
                 @if($menu->is_pedas)
-                    <span class="pedas-badge"><i class="fas fa-fire"></i> Pedas</span>
+                    @if($menu->kategori === 'minuman')
+                        <span class="pedas-badge">🍬 Manis</span>
+                    @else
+                        <span class="pedas-badge"><i class="fas fa-fire"></i> Pedas</span>
+                    @endif
                 @endif
-                @if($menu->status === 'habis')
+                @if($menu->stock <= 0)
                     <div class="habis-overlay"><span class="habis-label">Habis</span></div>
                 @endif
             </div>
@@ -119,7 +123,7 @@
                 <div class="menu-name">{{ $menu->nama_menu }}</div>
                 <div class="menu-foot">
                     <div class="menu-price">Rp {{ number_format($menu->harga, 0, ',', '.') }}</div>
-                    @if($menu->status === 'tersedia')
+                    @if($menu->stock > 0)
                         <div class="menu-cart-ctrl" id="ctrl-{{ $menu->id }}">
                             <button class="btn-add" onclick="addToCart({{ $menu->id }})">
                                 <i class="fas fa-plus" style="font-size:.7rem;"></i> Tambah
@@ -129,7 +133,18 @@
                 </div>
             </div>
         </div>
-        @endforeach
+        @empty
+        <div class="empty-state">
+            <i class="fas fa-bowl-food"></i>
+            <p>Tidak ada produk yang tersedia saat ini.</p>
+        </div>
+        @endforelse
+
+        {{-- Empty state JS filter (hidden by default, shown by JS) --}}
+        <div class="empty-state" id="empty-filter" style="display:none;">
+            <i class="fas fa-magnifying-glass"></i>
+            <p id="empty-filter-text">Tidak ada produk di kategori ini.</p>
+        </div>
     </div>
 
 </div>
@@ -237,11 +252,25 @@ let activeCat   = 'semua';
 let activeSpicy = 'semua';
 
 function applyFilters() {
+    var visible = 0;
     document.querySelectorAll('#menu-grid .menu-card').forEach(function(card) {
         const catMatch   = activeCat === 'semua'   || card.dataset.cat   === activeCat;
         const spicyMatch = activeSpicy === 'semua' || card.dataset.pedas === activeSpicy;
-        card.style.display = (catMatch && spicyMatch) ? '' : 'none';
+        const show = catMatch && spicyMatch;
+        card.style.display = show ? '' : 'none';
+        if (show) visible++;
     });
+    var emptyEl  = document.getElementById('empty-filter');
+    var emptyTxt = document.getElementById('empty-filter-text');
+    if (emptyEl) {
+        emptyEl.style.display = visible === 0 ? '' : 'none';
+        if (emptyTxt && visible === 0) {
+            var isMinuman = activeCat === 'minuman';
+            emptyTxt.textContent = activeCat === 'semua'
+                ? 'Tidak ada produk yang tersedia saat ini.'
+                : 'Tidak ada produk di kategori ini.';
+        }
+    }
 }
 
 document.querySelectorAll('#tab-group .tab-btn').forEach(function(btn) {
@@ -249,6 +278,17 @@ document.querySelectorAll('#tab-group .tab-btn').forEach(function(btn) {
         document.querySelectorAll('#tab-group .tab-btn').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
         activeCat = btn.dataset.cat;
+
+        // Update spicy/manis filter labels based on active category
+        var isMinuman = activeCat === 'minuman';
+        document.querySelector('.spicy-btn[data-spicy="pedas"]').innerHTML    = isMinuman ? '🍬 Manis'      : '🌶 Pedas';
+        document.querySelector('.spicy-btn[data-spicy="tidak_pedas"]').textContent = isMinuman ? 'Tidak Manis' : 'Tidak Pedas';
+
+        // Reset spicy filter to "Semua" on every tab change
+        document.querySelectorAll('#spicy-group .spicy-btn').forEach(b => b.classList.remove('active'));
+        document.querySelector('.spicy-btn[data-spicy="semua"]').classList.add('active');
+        activeSpicy = 'semua';
+
         applyFilters();
     });
 });

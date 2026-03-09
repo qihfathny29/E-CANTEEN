@@ -25,9 +25,11 @@
         .form-input{width:100%;background:var(--input-bg);border:1px solid var(--border-md);border-radius:.6rem;color:var(--text);padding:.7rem 1rem;font-size:.9rem;font-family:var(--font-b);outline:none;transition:border .2s,background .2s,box-shadow .2s;}
         .form-input:focus{border-color:rgba(192,57,43,.65);background:var(--input-bg-f);box-shadow:0 0 0 3px rgba(192,57,43,.12);}
         .form-input::placeholder{color:var(--text-muted);}
+        .form-hint{font-size:.75rem;color:var(--text-muted);margin-top:.35rem;}
         .form-select{width:100%;background:var(--input-bg);border:1px solid var(--border-md);border-radius:.6rem;color:var(--text);padding:.7rem 1rem;font-size:.9rem;font-family:var(--font-b);outline:none;cursor:pointer;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='rgba(255,255,255,0.4)' stroke-width='2.5'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 1rem center;transition:border .2s,box-shadow .2s;}
         .form-select:focus{border-color:rgba(192,57,43,.65);box-shadow:0 0 0 3px rgba(192,57,43,.12);}
         html[data-theme="light"] .form-select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='rgba(0,0,0,0.4)' stroke-width='2.5'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");}
+        select option{background:#1c1c1c;color:#e0e0e0;}
         html[data-theme="light"] select option{background:#ffffff;color:#0f0f0f;}
 
         /* FILE UPLOAD */
@@ -45,6 +47,16 @@
         .input-prefix-group{position:relative;display:flex;align-items:center;}
         .input-prefix{position:absolute;left:1rem;font-size:.85rem;font-weight:700;color:var(--text-muted);pointer-events:none;font-family:var(--font-d);}
         .input-prefix-group .form-input{padding-left:2.8rem;}
+
+        /* TOGGLE */
+        .toggle-group{display:flex;align-items:center;gap:.9rem;}
+        .toggle-label{font-family:var(--font-d);font-size:.82rem;font-weight:600;color:var(--text-sub);cursor:pointer;user-select:none;}
+        .toggle-switch{position:relative;width:42px;height:24px;flex-shrink:0;}
+        .toggle-switch input{opacity:0;width:0;height:0;position:absolute;}
+        .toggle-track{position:absolute;inset:0;background:var(--border-md);border-radius:100px;cursor:pointer;transition:background .2s;}
+        .toggle-track:before{content:'';position:absolute;left:3px;top:3px;width:18px;height:18px;background:white;border-radius:50%;transition:transform .2s;}
+        .toggle-switch input:checked + .toggle-track{background:#ef4444;}
+        .toggle-switch input:checked + .toggle-track:before{transform:translateX(18px);}
 
         /* FORM ACTIONS */
         .form-actions{display:flex;gap:.75rem;margin-top:1.75rem;padding-top:1.5rem;border-top:1px solid var(--border);}
@@ -108,11 +120,32 @@
             </div>
 
             <div class="form-group">
-                <label class="form-label">Status</label>
-                <select name="status" class="form-select">
-                    <option value="tersedia" {{ old('status','tersedia') === 'tersedia' ? 'selected' : '' }}>Tersedia</option>
-                    <option value="habis" {{ old('status') === 'habis' ? 'selected' : '' }}>Habis</option>
+                <label class="form-label">Stok</label>
+                <input type="number" name="stock" value="{{ old('stock', 10) }}"
+                       class="form-input" min="0" placeholder="Contoh: 10">
+                <span class="form-hint">Stok 0 = menu tampil abu-abu dan tidak bisa dipesan.</span>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Kategori</label>
+                <select name="kategori" id="kategori-select" class="form-select">
+                    <option value="" disabled {{ old('kategori') ? '' : 'selected' }}>-- Pilih Kategori --</option>
+                    <option value="makanan_utama" {{ old('kategori') === 'makanan_utama' ? 'selected' : '' }}>Makanan Utama</option>
+                    <option value="minuman"       {{ old('kategori') === 'minuman'       ? 'selected' : '' }}>Minuman</option>
+                    <option value="cemilan"       {{ old('kategori') === 'cemilan'       ? 'selected' : '' }}>Cemilan</option>
+                    <option value="spesial_promo" {{ old('kategori') === 'spesial_promo' ? 'selected' : '' }}>Spesial Promo</option>
                 </select>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label" id="pedas-section-label">Tingkat Kepedasan</label>
+                <div class="toggle-group">
+                    <label class="toggle-switch">
+                        <input type="checkbox" name="is_pedas" id="is-pedas-input" value="1" {{ old('is_pedas') ? 'checked' : '' }}>
+                        <span class="toggle-track"></span>
+                    </label>
+                    <span class="toggle-label" id="toggle-label-text">Menu tidak pedas</span>
+                </div>
             </div>
 
             <div class="form-actions">
@@ -142,5 +175,23 @@
         };
         reader.readAsDataURL(file);
     });
+
+    // Dynamic toggle label based on kategori + checked state
+    var _katSel   = document.getElementById('kategori-select');
+    var _pedasChk = document.getElementById('is-pedas-input');
+    var _secLbl   = document.getElementById('pedas-section-label');
+    var _togTxt   = document.getElementById('toggle-label-text');
+
+    function updatePedasLabel() {
+        var isMinuman = _katSel.value === 'minuman';
+        var isOn      = _pedasChk.checked;
+        _secLbl.textContent = isMinuman ? 'Tingkat Kemanisan' : 'Tingkat Kepedasan';
+        _togTxt.textContent = isMinuman
+            ? (isOn ? '🍬 Minuman ini manis' : 'Minuman tidak manis')
+            : (isOn ? '🌶 Menu ini pedas'    : 'Menu tidak pedas');
+    }
+    _katSel.addEventListener('change', updatePedasLabel);
+    _pedasChk.addEventListener('change', updatePedasLabel);
+    updatePedasLabel();
 </script>
 @endsection

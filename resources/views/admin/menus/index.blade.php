@@ -36,6 +36,8 @@
         /* BADGES */
         .badge-tersedia{display:inline-flex;align-items:center;gap:.3rem;font-family:var(--font-d);font-size:.7rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;background:rgba(34,197,94,.12);color:#4ade80;border:1px solid rgba(34,197,94,.22);padding:.22rem .7rem;border-radius:100px;}
         .badge-habis{display:inline-flex;align-items:center;gap:.3rem;font-family:var(--font-d);font-size:.7rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;background:rgba(192,57,43,.12);color:var(--red-h);border:1px solid rgba(192,57,43,.22);padding:.22rem .7rem;border-radius:100px;}
+        tbody tr.row-habis td{opacity:.5;}
+        .menu-thumb.habis{filter:grayscale(100%);}
 
         /* EMPTY */
         .empty-state{padding:4rem 2rem;text-align:center;}
@@ -78,16 +80,16 @@
                     <th style="width:60px;">Foto</th>
                     <th>Nama Menu</th>
                     <th>Harga</th>
-                    <th>Status</th>
+                    <th>Stok</th>
                     <th style="width:140px;">Aksi</th>
                 </tr>
             </thead>
             <tbody>
                 @forelse($menus as $menu)
-                <tr>
+                <tr class="{{ $menu->stock <= 0 ? 'row-habis' : '' }}">
                     <td>
                         @if($menu->foto)
-                            <img src="{{ Storage::url($menu->foto) }}" class="menu-thumb" alt="{{ $menu->nama_menu }}">
+                            <img src="{{ Storage::url($menu->foto) }}" class="menu-thumb{{ $menu->stock <= 0 ? ' habis' : '' }}" alt="{{ $menu->nama_menu }}">
                         @else
                             <div class="menu-thumb-placeholder"><i class="fas fa-image"></i></div>
                         @endif
@@ -95,8 +97,8 @@
                     <td class="td-name">{{ $menu->nama_menu }}</td>
                     <td class="td-price">Rp {{ number_format($menu->harga, 0, ',', '.') }}</td>
                     <td>
-                        @if($menu->status === 'tersedia')
-                            <span class="badge-tersedia"><i class="fas fa-circle" style="font-size:.42rem;"></i> Tersedia</span>
+                        @if($menu->stock > 0)
+                            <span class="badge-tersedia"><i class="fas fa-circle" style="font-size:.42rem;"></i> {{ $menu->stock }}</span>
                         @else
                             <span class="badge-habis"><i class="fas fa-circle" style="font-size:.42rem;"></i> Habis</span>
                         @endif

@@ -13,7 +13,7 @@ class CheckoutController extends Controller
     public function index()
     {
         // Pass menu data keyed by ID so JS dapat lookup foto & status
-        $menus = Menu::where('status', 'tersedia')->get()->keyBy('id');
+        $menus = Menu::where('stock', '>', 0)->get()->keyBy('id');
         $user  = auth()->user();
         return view('user.checkout.index', compact('menus', 'user'));
     }
@@ -36,8 +36,9 @@ class CheckoutController extends Controller
         foreach ($request->items as $item) {
             $menu = Menu::find($item['menu_id']);
 
-            if ($menu->status === 'habis') {
-                return back()->with('error', "Menu {$menu->nama_menu} sudah habis!");
+            if ($menu->stock < $item['jumlah']) {
+                $sisa = $menu->stock <= 0 ? 'sudah habis' : "sisa {$menu->stock}";
+                return back()->with('error', "Stok {$menu->nama_menu} tidak cukup ({$sisa})!");
             }
 
             $subtotal    = $menu->harga * $item['jumlah'];
@@ -70,6 +71,7 @@ class CheckoutController extends Controller
 
             foreach ($itemsData as $item) {
                 $order->orderItems()->create($item);
+                Menu::where('id', $item['menu_id'])->decrement('stock', $item['jumlah']);
             }
 
             // Potong saldo hanya untuk metode saldo

@@ -585,31 +585,21 @@
                 <div class="flip-card-back glass-card shadow-2xl">
                     
                     <!-- Form Side (Left) -->
-                    <div class="w-2/3 p-10 flex flex-col justify-center form-side">
-                        <h2 class="heading-register mb-5 text-center text-white">Register</h2>
+                    <div class="w-2/3 p-8 flex flex-col justify-center form-side overflow-y-auto">
+                        <h2 class="heading-register mb-4 text-center text-white">Register</h2>
                         
-                        <form method="POST" action="{{ route('register') }}" class="grid grid-cols-2 gap-4">
+                        <form method="POST" action="{{ route('register') }}" class="grid grid-cols-2 gap-3">
                             @csrf
                             
                             <!-- Full Name -->
-                            <div class="relative group">
+                            <div class="relative group col-span-2">
                                 <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                                     <i class="fas fa-user input-icon"></i>
                                 </div>
                                 <input id="name" type="text" name="name" value="{{ old('name') }}" required 
                                     class="w-full input-field-custom rounded-xl pl-12 py-3 outline-none"
-                                    placeholder="Full Name">
+                                    placeholder="Nama Lengkap">
                                 <x-input-error :messages="$errors->get('name')" class="mt-1 text-red-200" />
-                            </div>
-
-                            <!-- Student ID -->
-                            <div class="relative group">
-                                <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                                    <i class="fas fa-id-card input-icon"></i>
-                                </div>
-                                <input id="student_id" type="text" name="student_id" value="{{ old('student_id') }}" required 
-                                    class="w-full input-field-custom rounded-xl pl-12 py-3 outline-none"
-                                    placeholder="Student ID">
                             </div>
 
                             <!-- Email Address -->
@@ -619,24 +609,8 @@
                                 </div>
                                 <input id="reg_email" type="email" name="email" value="{{ old('email') }}" required 
                                     class="w-full input-field-custom rounded-xl pl-12 py-3 outline-none"
-                                    placeholder="Email Address">
+                                    placeholder="Alamat Email">
                                 <x-input-error :messages="$errors->get('email')" class="mt-1 text-red-200" />
-                            </div>
-
-                            <!-- Grade Level -->
-                            <div class="relative group col-span-2">
-                                <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                                    <i class="fas fa-graduation-cap input-icon"></i>
-                                </div>
-                                <select class="w-full input-field-custom rounded-xl pl-12 py-3 appearance-none outline-none cursor-pointer">
-                                    <option value="" disabled selected class="bg-[#5a77de]">Grade Level</option>
-                                    <option value="10" class="bg-[#5a77de]">Grade 10</option>
-                                    <option value="11" class="bg-[#5a77de]">Grade 11</option>
-                                    <option value="12" class="bg-[#5a77de]">Grade 12</option>
-                                </select>
-                                <div class="absolute inset-y-0 right-0 pr-4 flex items-center pointer-events-none">
-                                    <i class="fas fa-chevron-down text-xs input-icon"></i>
-                                </div>
                             </div>
 
                             <!-- Password -->
@@ -647,6 +621,7 @@
                                 <input id="reg_password" type="password" name="password" required 
                                     class="w-full input-field-custom rounded-xl pl-12 py-3 outline-none"
                                     placeholder="Password">
+                                <x-input-error :messages="$errors->get('password')" class="mt-1 text-red-200" />
                             </div>
 
                             <!-- Confirm Password -->
@@ -656,39 +631,38 @@
                                 </div>
                                 <input id="reg_password_confirmation" type="password" name="password_confirmation" required 
                                     class="w-full input-field-custom rounded-xl pl-12 py-3 outline-none"
-                                    placeholder="Confirm Password">
+                                    placeholder="Konfirmasi Password">
                             </div>
 
                             <!-- User Type Selection -->
-                            <div class="col-span-2 space-y-2">
-                                <p class="section-label">Select User Type:</p>
-                                <div class="flex gap-6">
-                                    <label class="flex items-center gap-2 cursor-pointer group">
-                                        <input type="radio" name="user_type" value="student" checked class="w-4 h-4 text-[#323955] bg-white/20 border-white/30 focus:ring-white/50">
-                                        <span style="font-family: var(--font-body); font-size: 0.85rem; font-weight: 500; color: rgba(255,255,255,0.85);">Student</span>
+                            <div class="col-span-2">
+                                <p class="section-label mb-2">Pilih Tipe Pengguna:</p>
+                                <div class="flex gap-5">
+                                    <label class="flex items-center gap-2 cursor-pointer">
+                                        <input type="radio" name="user_type" value="siswa" checked class="w-4 h-4" style="accent-color:#c0392b;">
+                                        <span style="font-family:var(--font-body);font-size:.85rem;font-weight:500;color:rgba(255,255,255,.85);">Siswa</span>
                                     </label>
-                                    <label class="flex items-center gap-2 cursor-pointer group">
-                                        <input type="radio" name="user_type" value="faculty" class="w-4 h-4 text-[#323955] bg-white/20 border-white/30 focus:ring-white/50">
-                                        <span style="font-family: var(--font-body); font-size: 0.85rem; font-weight: 500; color: rgba(255,255,255,0.85);">Faculty/Staff</span>
+                                    <label class="flex items-center gap-2 cursor-pointer">
+                                        <input type="radio" name="user_type" value="guru" class="w-4 h-4" style="accent-color:#c0392b;">
+                                        <span style="font-family:var(--font-body);font-size:.85rem;font-weight:500;color:rgba(255,255,255,.85);">Guru / Staff</span>
                                     </label>
                                 </div>
+                                <x-input-error :messages="$errors->get('user_type')" class="mt-1 text-red-200" />
                             </div>
 
                             <div class="col-span-2">
-                                <label class="flex items-center gap-2 cursor-pointer group">
-                                    <input type="checkbox" required class="w-4 h-4 text-[#323955] bg-white/20 border-white/30 rounded focus:ring-white/50">
-                                    <span style="font-family: var(--font-body); font-size: 0.78rem; color: rgba(255,255,255,0.65);">
-                                        I agree to the <a href="#" class="text-white font-bold underline underline-offset-2">Terms & Conditions</a>.
-                                    </span>
+                                <label class="flex items-center gap-2 cursor-pointer">
+                                    <input type="checkbox" required class="w-4 h-4 rounded" style="accent-color:#c0392b;">
+                                    <span style="font-family:var(--font-body);font-size:.78rem;color:rgba(255,255,255,.65);">Saya setuju dengan <a href="#" class="text-white font-bold underline underline-offset-2">Syarat & Ketentuan</a>.</span>
                                 </label>
                             </div>
 
-                            <div class="col-span-2 mt-1">
-                                <button type="submit" class="w-full py-4 btn-primary-custom rounded-xl shadow-lg text-white">
-                                    Register
+                            <div class="col-span-2">
+                                <button type="submit" class="w-full py-3.5 btn-primary-custom rounded-xl shadow-lg text-white">
+                                    Daftar Sekarang
                                 </button>
                                 <p class="helper-text">
-                                    Already have an account? <a href="javascript:void(0)" @click="isFlipped = false" class="action-link">Log In</a> above.
+                                    Sudah punya akun? <a href="javascript:void(0)" @click="isFlipped = false" class="action-link">Masuk</a> di sini.
                                 </p>
                             </div>
                         </form>

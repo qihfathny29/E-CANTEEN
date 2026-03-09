@@ -14,7 +14,7 @@ class OrderController extends Controller
     // Halaman form pre-order
     public function create()
     {
-        $menus = Menu::where('status', 'tersedia')->get();
+        $menus = Menu::where('stock', '>', 0)->get();
         return view('user.orders.create', compact('menus'));
     }
 
@@ -38,8 +38,8 @@ class OrderController extends Controller
 
             $menu = Menu::find($item['menu_id']);
 
-            // Cek lagi statusnya, bisa aja habis pas lagi checkout
-            if ($menu->status === 'habis') {
+            // Cek lagi stoknya, bisa aja habis pas lagi checkout
+            if ($menu->stock <= 0) {
                 return back()->with('error', "Menu {$menu->nama_menu} sudah habis!");
             }
 

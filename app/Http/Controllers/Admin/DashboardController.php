@@ -14,7 +14,7 @@ class DashboardController extends Controller
     {
         $totalUsers    = User::count();
         $ordersToday   = Order::whereDate('created_at', today())->count();
-        $activeMenus   = Menu::where('status', 'tersedia')->count();
+        $activeMenus   = Menu::where('stock', '>', 0)->count();
         $revenueToday  = Order::whereDate('created_at', today())->where('status', 'selesai')->sum('total_harga');
         $pendingOrders = Order::whereIn('status', ['pending', 'sedang_disiapkan', 'siap_diambil'])->count();
 

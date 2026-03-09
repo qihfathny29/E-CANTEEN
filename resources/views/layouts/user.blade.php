@@ -223,6 +223,9 @@
                             <div class="dropdown-header-name">{{ $navUser->name }}</div>
                             <div class="dropdown-header-role" data-i18n="dropdown.role">Pengguna</div>
                         </div>
+                        <a href="{{ route('user.profile') }}" class="dropdown-item">
+                            <i class="fas fa-user-pen"></i> <span data-i18n="dropdown.edit_profile">Edit Profil</span>
+                        </a>
                         <form method="POST" action="{{ route('logout') }}" style="margin:0;">
                             @csrf
                             <button type="submit" class="dropdown-item danger">
@@ -280,6 +283,7 @@
             'sidebar.balance': 'Saldo',
             'sidebar.logout': 'Keluar',
             'dropdown.role': 'Pengguna',
+            'dropdown.edit_profile': 'Edit Profil',
             'dropdown.logout': 'Keluar',
         },
         en: {
@@ -292,6 +296,7 @@
             'sidebar.balance': 'Balance',
             'sidebar.logout': 'Logout',
             'dropdown.role': 'Student',
+            'dropdown.edit_profile': 'Edit Profile',
             'dropdown.logout': 'Logout',
         }
     };

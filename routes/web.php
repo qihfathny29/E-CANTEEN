@@ -7,6 +7,7 @@ use App\Http\Controllers\User\MenuController as UserMenuController;
 use App\Http\Controllers\User\OrderController as UserOrderController;
 use App\Http\Controllers\User\SaldoController as UserSaldoController;
 use App\Http\Controllers\User\CheckoutController as UserCheckoutController;
+use App\Http\Controllers\User\ProfileController as UserProfileController;
 use App\Http\Controllers\Admin\MenuController;
 use App\Http\Controllers\Admin\AntreanController;
 use App\Http\Controllers\Admin\LaporanController;
@@ -60,6 +61,10 @@ Route::prefix('user')->middleware(['auth', 'user'])->group(function () {
     // Checkout
     Route::get('/checkout', [UserCheckoutController::class, 'index'])->name('user.checkout.index');
     Route::post('/checkout/pay', [UserCheckoutController::class, 'pay'])->name('user.checkout.pay');
+
+    // Profile
+    Route::get('/profile', [UserProfileController::class, 'show'])->name('user.profile');
+    Route::post('/profile', [UserProfileController::class, 'update'])->name('user.profile.update');
 });
 
 require __DIR__.'/auth.php';

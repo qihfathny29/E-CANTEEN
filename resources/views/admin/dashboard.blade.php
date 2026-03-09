@@ -47,6 +47,14 @@
 </div>
 
 <div style="padding:0 2rem 2rem;display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.25rem;">
+    <a href="{{ route('admin.menus.index') }}" class="stat-card" style="text-decoration:none;display:flex;align-items:center;gap:1.2rem;padding:1.25rem 1.5rem;">
+        <div class="stat-icon" style="margin-bottom:0;flex-shrink:0;"><i class="fas fa-bowl-food"></i></div>
+        <div>
+            <div style="font-family:var(--font-d);font-size:.95rem;font-weight:700;color:var(--text);" data-i18n="quick.menus">Kelola Menu</div>
+            <div style="font-size:.8rem;color:var(--text-muted);margin-top:.15rem;" data-i18n-tmpl="quick.menus_sub" data-i18n-val="{{ $activeMenuCount }}">{{ $activeMenuCount }} menu tersedia saat ini</div>
+        </div>
+        <i class="fas fa-chevron-right" style="margin-left:auto;color:var(--text-muted);font-size:.8rem;"></i>
+    </a>
     <a href="{{ route('admin.antrean.index') }}" class="stat-card" style="text-decoration:none;display:flex;align-items:center;gap:1.2rem;padding:1.25rem 1.5rem;">
         <div class="stat-icon" style="margin-bottom:0;flex-shrink:0;position:relative;">
             <i class="fas fa-list-ol"></i>
@@ -65,14 +73,6 @@
         <div>
             <div style="font-family:var(--font-d);font-size:.95rem;font-weight:700;color:var(--text);" data-i18n="quick.report">Laporan Harian</div>
             <div style="font-size:.8rem;color:var(--text-muted);margin-top:.15rem;" data-i18n="quick.report_sub">Lihat rekap transaksi hari ini</div>
-        </div>
-        <i class="fas fa-chevron-right" style="margin-left:auto;color:var(--text-muted);font-size:.8rem;"></i>
-    </a>
-    <a href="{{ route('admin.menus.index') }}" class="stat-card" style="text-decoration:none;display:flex;align-items:center;gap:1.2rem;padding:1.25rem 1.5rem;">
-        <div class="stat-icon" style="margin-bottom:0;flex-shrink:0;"><i class="fas fa-bowl-food"></i></div>
-        <div>
-            <div style="font-family:var(--font-d);font-size:.95rem;font-weight:700;color:var(--text);" data-i18n="quick.menus">Kelola Menu</div>
-            <div style="font-size:.8rem;color:var(--text-muted);margin-top:.15rem;" data-i18n-tmpl="quick.menus_sub" data-i18n-val="{{ $activeMenuCount }}">{{ $activeMenuCount }} menu tersedia saat ini</div>
         </div>
         <i class="fas fa-chevron-right" style="margin-left:auto;color:var(--text-muted);font-size:.8rem;"></i>
     </a>

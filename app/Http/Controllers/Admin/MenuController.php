@@ -30,7 +30,8 @@ class MenuController extends Controller
             'nama_menu' => 'required|string|max:255',
             'harga'     => 'required|numeric|min:0',
             'foto'      => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
-            'status'    => 'required|in:tersedia,habis',
+            'stock'     => 'required|integer|min:0',
+            'kategori'  => 'required|in:makanan_utama,minuman,cemilan,spesial_promo',
         ]);
 
         // Handle upload foto
@@ -44,7 +45,9 @@ class MenuController extends Controller
             'nama_menu' => $request->nama_menu,
             'harga'     => $request->harga,
             'foto'      => $fotoPath,
-            'status'    => $request->status,
+            'stock'     => $request->stock,
+            'kategori'  => $request->kategori,
+            'is_pedas'  => $request->boolean('is_pedas'),
         ]);
 
         return redirect()->route('admin.menus.index')
@@ -65,7 +68,8 @@ class MenuController extends Controller
             'nama_menu' => 'required|string|max:255',
             'harga'     => 'required|numeric|min:0',
             'foto'      => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
-            'status'    => 'required|in:tersedia,habis',
+            'stock'     => 'required|integer|min:0',
+            'kategori'  => 'required|in:makanan_utama,minuman,cemilan,spesial_promo',
         ]);
 
         $fotoPath = $menu->foto; // default pakai foto lama
@@ -83,7 +87,9 @@ class MenuController extends Controller
             'nama_menu' => $request->nama_menu,
             'harga'     => $request->harga,
             'foto'      => $fotoPath,
-            'status'    => $request->status,
+            'stock'     => $request->stock,
+            'kategori'  => $request->kategori,
+            'is_pedas'  => $request->boolean('is_pedas'),
         ]);
 
         return redirect()->route('admin.menus.index')

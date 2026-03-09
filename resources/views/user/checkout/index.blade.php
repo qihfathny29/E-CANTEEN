@@ -244,7 +244,7 @@ const serverMenus = {
     @foreach($menus as $menu)
     {{ $menu->id }}: {
         foto: '{{ $menu->foto ? Storage::url($menu->foto) : '' }}',
-        status: '{{ $menu->status }}'
+        status: '{{ $menu->stock > 0 ? "tersedia" : "habis" }}'
     },
     @endforeach
 };
