@@ -151,17 +151,9 @@
                             <span class="cost-label">Subtotal</span>
                             <span class="cost-val" id="cost-subtotal">Rp 0</span>
                         </div>
-                        <div class="cost-row">
-                            <span class="cost-label">Pajak (0%)</span>
-                            <span class="cost-val">Rp 0</span>
-                        </div>
-                        <div class="cost-row">
-                            <span class="cost-label">Biaya Layanan</span>
-                            <span class="cost-val">Rp 2.000</span>
-                        </div>
                         <div class="cost-row total">
                             <span class="cost-label">Total Pembayaran</span>
-                            <span class="cost-val" id="cost-total">Rp 2.000</span>
+                            <span class="cost-val" id="cost-total">Rp 0</span>
                         </div>
                     </div>
                 </div>
@@ -250,7 +242,7 @@ const serverMenus = {
 };
 
 const CART_KEY    = 'ecanteen-cart-{{ auth()->id() }}';
-const BIAYA_LAYANAN = 2000;
+const BIAYA_LAYANAN = 0;
 
 function loadCart() {
     try { return JSON.parse(localStorage.getItem(CART_KEY)) || {}; }
@@ -289,8 +281,8 @@ function renderPage() {
         empty.style.display = '';
         btnPay.disabled = true;
         document.getElementById('cost-subtotal').textContent = 'Rp 0';
-        document.getElementById('cost-total').textContent = 'Rp ' + BIAYA_LAYANAN.toLocaleString('id-ID');
-        document.getElementById('btn-pay-label').textContent = 'Bayar Rp ' + BIAYA_LAYANAN.toLocaleString('id-ID') + ' Now';
+        document.getElementById('cost-total').textContent = 'Rp 0';
+        document.getElementById('btn-pay-label').textContent = 'Bayar Sekarang';
         return;
     }
 
@@ -340,10 +332,10 @@ function renderPage() {
     list.innerHTML  = itemsHTML;
     hidden.innerHTML = hiddenHTML;
 
-    const total = subtotal + BIAYA_LAYANAN;
+    const total = subtotal;
     document.getElementById('cost-subtotal').textContent = 'Rp ' + subtotal.toLocaleString('id-ID');
     document.getElementById('cost-total').textContent    = 'Rp ' + total.toLocaleString('id-ID');
-    document.getElementById('btn-pay-label').textContent = 'Bayar Rp ' + total.toLocaleString('id-ID') + ' Now';
+    document.getElementById('btn-pay-label').textContent = 'Bayar Rp ' + total.toLocaleString('id-ID') + ' Sekarang';
 
     syncNotes();
 }

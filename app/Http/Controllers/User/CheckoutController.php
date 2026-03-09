@@ -29,9 +29,8 @@ class CheckoutController extends Controller
             'items.*.catatan'     => 'nullable|string|max:255',
         ]);
 
-        $biayaLayanan = 2000;
-        $totalHarga   = 0;
-        $itemsData    = [];
+        $totalHarga = 0;
+        $itemsData  = [];
 
         foreach ($request->items as $item) {
             $menu = Menu::find($item['menu_id']);
@@ -53,7 +52,7 @@ class CheckoutController extends Controller
             ];
         }
 
-        $totalBayar = $totalHarga + $biayaLayanan;
+        $totalBayar = $totalHarga;
 
         // Kalau saldo, cek kecukupan
         if ($request->metode_bayar === 'saldo' && auth()->user()->saldo < $totalBayar) {
