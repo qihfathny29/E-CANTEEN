@@ -90,8 +90,8 @@
 @section('content')
 <div class="page-wrap">
 
-    <a href="{{ route('user.menus.index') }}" class="back-link">
-        <i class="fas fa-arrow-left" style="font-size:.75rem;"></i> Kembali ke Menu
+    <a href="{{ route('user.orders.create') }}" class="back-link">
+        <i class="fas fa-arrow-left" style="font-size:.75rem;"></i> Kembali ke Pre-Order
     </a>
 
     <h1 class="page-title">Ringkasan Pesanan <span>&</span> Pembayaran</h1>
@@ -114,7 +114,7 @@
                     <div class="empty-cart" id="empty-cart" style="display:none;">
                         <i class="fas fa-cart-shopping"></i>
                         <p>Keranjangmu masih kosong.</p>
-                        <a href="{{ route('user.menus.index') }}"><i class="fas fa-arrow-left" style="font-size:.7rem;"></i> Kembali ke Menu</a>
+                        <a href="{{ route('user.orders.create') }}"><i class="fas fa-arrow-left" style="font-size:.7rem;"></i> Kembali ke Pre-Order</a>
                     </div>
                     <div id="order-items-list"></div>
                 </div>
@@ -172,7 +172,7 @@
                                 <i class="fas fa-wallet" style="color:var(--red);"></i>
                             </div>
                             <div>
-                                <div class="pay-name">Saldo E-Canteen SISWA</div>
+                                <div class="pay-name">Saldo E-Canteen {{ strtoupper($user->user_type ?? 'SISWA') }}</div>
                                 <div class="pay-sub">Rp {{ number_format($user->saldo, 0, ',', '.') }}</div>
                             </div>
                             <div class="pay-check"></div>

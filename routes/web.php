@@ -13,6 +13,8 @@ use App\Http\Controllers\Admin\MenuController;
 use App\Http\Controllers\Admin\AntreanController;
 use App\Http\Controllers\Admin\LaporanController;
 use App\Http\Controllers\Admin\ProfileController as AdminProfileController;
+use App\Http\Controllers\Admin\SaldoController as AdminSaldoController;
+use App\Http\Controllers\Admin\UserController as AdminUserController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -39,9 +41,18 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
     Route::patch('/antrean/{order}/status', [AntreanController::class, 'updateStatus'])->name('admin.antrean.updateStatus');
 
     Route::get('/laporan', [LaporanController::class, 'index'])->name('admin.laporan.index');
+    Route::get('/laporan/export', [LaporanController::class, 'export'])->name('admin.laporan.export');
+    Route::get('/laporan/export-pdf', [LaporanController::class, 'exportPdf'])->name('admin.laporan.exportPdf');
 
     Route::get('/profile', [AdminProfileController::class, 'show'])->name('admin.profile');
     Route::post('/profile', [AdminProfileController::class, 'update'])->name('admin.profile.update');
+
+    // Saldo
+    Route::get('/saldo', [AdminSaldoController::class, 'index'])->name('admin.saldo.index');
+    Route::post('/saldo/topup', [AdminSaldoController::class, 'topup'])->name('admin.saldo.topup');
+
+    // Kelola User
+    Route::resource('users', AdminUserController::class, ['as' => 'admin']);
 });
 
 Route::prefix('user')->middleware(['auth', 'user'])->group(function () {
@@ -49,12 +60,14 @@ Route::prefix('user')->middleware(['auth', 'user'])->group(function () {
 
     // Menu
     Route::get('/menus', [UserMenuController::class, 'index'])->name('user.menus.index');
+    Route::get('/menus/{menu}', [UserMenuController::class, 'show'])->name('user.menus.show');
 
     // Order
     Route::get('/order', [UserOrderController::class, 'create'])->name('user.orders.create');
     Route::post('/order', [UserOrderController::class, 'store'])->name('user.orders.store');
     Route::get('/riwayat', [UserOrderController::class, 'index'])->name('user.orders.index');
     Route::post('/riwayat/{order}/pickup', [UserOrderController::class, 'confirmPickup'])->name('user.orders.confirmPickup');
+    Route::get('/riwayat/{order}/struk', [UserOrderController::class, 'struk'])->name('user.orders.struk');
 
     // Saldo
     Route::get('/saldo', [UserSaldoController::class, 'index'])->name('user.saldo.index');

@@ -62,6 +62,14 @@
         <button type="submit" class="btn-filter">
             <i class="fas fa-magnifying-glass"></i> Filter
         </button>
+        <a href="{{ route('admin.laporan.export', ['tanggal' => $tanggal]) }}"
+           class="btn-filter" style="background:var(--bg-card2);border:1px solid var(--border-md);color:var(--text-sub);text-decoration:none;">
+            <i class="fas fa-file-csv"></i> Export CSV
+        </a>
+        <a href="{{ route('admin.laporan.exportPdf', ['tanggal' => $tanggal]) }}"
+           class="btn-filter" style="background:rgba(192,57,43,.12);border:1px solid rgba(192,57,43,.3);color:#e07060;text-decoration:none;">
+            <i class="fas fa-file-pdf"></i> Export PDF
+        </a>
     </form>
 
     <div class="stats-grid">

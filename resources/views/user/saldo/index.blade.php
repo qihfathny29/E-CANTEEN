@@ -13,16 +13,11 @@
         .saldo-hero-amount{font-family:var(--font-d);font-size:2.1rem;font-weight:800;letter-spacing:-.03em;}
         .saldo-hero-name{font-size:.82rem;opacity:.7;margin-top:.75rem;}
         .topup-card{background:var(--bg-card);border:1px solid var(--border);border-radius:1rem;padding:1.4rem;}
-        .topup-title{font-family:var(--font-d);font-size:.95rem;font-weight:700;color:var(--text);margin-bottom:1.1rem;}
-        .flash-err{background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.25);color:#f87171;border-radius:.6rem;padding:.7rem .9rem;font-size:.85rem;margin-bottom:.9rem;}
-        .nominal-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.55rem;margin-bottom:1.1rem;}
-        .nominal-btn{padding:.55rem .4rem;border-radius:.55rem;border:1px solid var(--border-md);background:var(--bg-card2);color:var(--text-sub);font-family:var(--font-d);font-size:.75rem;font-weight:700;cursor:pointer;transition:all .2s;text-align:center;}
-        .nominal-btn:hover{border-color:rgba(192,57,43,.4);color:var(--text);background:rgba(192,57,43,.08);}
-        .form-label{font-size:.8rem;font-weight:600;color:var(--text-sub);margin-bottom:.4rem;display:block;}
-        .form-input{width:100%;padding:.55rem .9rem;border-radius:.55rem;border:1px solid var(--border-md);background:var(--input-bg);color:var(--text);font-family:var(--font-b);font-size:.9rem;outline:none;transition:border .2s;margin-bottom:1rem;}
-        .form-input:focus{border-color:rgba(192,57,43,.5);}
-        .btn-topup{width:100%;padding:.72rem;border-radius:.6rem;background:var(--red);color:white;font-family:var(--font-d);font-size:.9rem;font-weight:700;border:none;cursor:pointer;transition:background .2s;}
-        .btn-topup:hover{background:var(--red-h);}
+        .topup-title{font-family:var(--font-d);font-size:.95rem;font-weight:700;color:var(--text);margin-bottom:.35rem;}
+        .topup-desc{font-size:.85rem;color:var(--text-muted);line-height:1.6;}
+        .topup-steps{list-style:none;margin-top:1rem;display:flex;flex-direction:column;gap:.6rem;}
+        .topup-steps li{display:flex;align-items:flex-start;gap:.65rem;font-size:.84rem;color:var(--text-sub);}
+        .step-num{width:22px;height:22px;border-radius:50%;background:rgba(192,57,43,.15);color:var(--red);font-family:var(--font-d);font-size:.68rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:.05rem;}
 @endsection
 
 @section('content')
@@ -43,29 +38,26 @@
     </div>
 
     <div class="topup-card">
-        <div class="topup-title" data-i18n="topup.title">Top Up Saldo</div>
-
-        @if($errors->any())
-            <div class="flash-err"><i class="fas fa-circle-exclamation"></i> {{ $errors->first() }}</div>
-        @endif
-
-        <form action="{{ route('user.saldo.topup') }}" method="POST">
-            @csrf
-            <div class="nominal-grid">
-                @foreach([10000, 20000, 50000, 100000, 200000, 500000] as $nominal)
-                <button type="button" class="nominal-btn"
-                        onclick="document.getElementById('jumlah').value={{ $nominal }}">
-                    Rp {{ number_format($nominal, 0, ',', '.') }}
-                </button>
-                @endforeach
-            </div>
-            <label class="form-label" for="jumlah" data-i18n="topup.label">Nominal Top Up</label>
-            <input type="number" id="jumlah" name="jumlah"
-                   placeholder="Minimal Rp 10.000" class="form-input">
-            <button type="submit" class="btn-topup">
-                <i class="fas fa-plus" style="margin-right:.4rem;"></i><span data-i18n="topup.btn">Top Up Sekarang</span>
-            </button>
-        </form>
+        <div class="topup-title">Cara Top Up Saldo</div>
+        <p class="topup-desc">Saldo kamu ditambahkan langsung oleh petugas kantin setelah kamu membayar tunai di kasir.</p>
+        <ol class="topup-steps">
+            <li>
+                <span class="step-num">1</span>
+                <span>Datangi kasir kantin dan beritahu nama kamu.</span>
+            </li>
+            <li>
+                <span class="step-num">2</span>
+                <span>Serahkan uang tunai sesuai nominal yang ingin kamu isi.</span>
+            </li>
+            <li>
+                <span class="step-num">3</span>
+                <span>Petugas akan langsung mengisi saldo ke akun kamu.</span>
+            </li>
+            <li>
+                <span class="step-num">4</span>
+                <span>Saldo akan otomatis muncul di sini setelah berhasil diisi.</span>
+            </li>
+        </ol>
     </div>
 </div>
 @endsection

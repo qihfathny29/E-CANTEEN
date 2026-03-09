@@ -153,6 +153,18 @@
                 <span class="s-icon"><i class="fas fa-chart-bar"></i></span>
                 <span data-i18n="sidebar.report">Laporan</span>
             </a>
+
+            <a href="{{ route('admin.saldo.index') }}"
+               class="sidebar-item {{ request()->routeIs('admin.saldo.*') ? 'active' : '' }}">
+                <span class="s-icon"><i class="fas fa-wallet"></i></span>
+                <span>Kelola Saldo</span>
+            </a>
+
+            <a href="{{ route('admin.users.index') }}"
+               class="sidebar-item {{ request()->routeIs('admin.users.*') ? 'active' : '' }}">
+                <span class="s-icon"><i class="fas fa-users"></i></span>
+                <span>Kelola User</span>
+            </a>
         </nav>
 
         <div class="sidebar-footer">

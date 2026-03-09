@@ -9,9 +9,12 @@ class MenuController extends Controller
 {
     public function index()
     {
-        // Ambil semua menu yang tersedia saja
-        $menus = Menu::where('stock', '>', 0)->get();
-
+        $menus = Menu::all();
         return view('user.menus.index', compact('menus'));
+    }
+
+    public function show(Menu $menu)
+    {
+        return view('user.menus.show', compact('menu'));
     }
 }

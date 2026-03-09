@@ -126,4 +126,12 @@ class OrderController extends Controller
         return redirect()->route('user.orders.index')
                          ->with('success', 'Pesanan selesai! Terima kasih 😊');
     }
+
+    public function struk(Order $order)
+    {
+        abort_if($order->user_id !== auth()->id(), 403);
+        abort_if($order->status !== 'selesai', 404);
+
+        return view('user.orders.struk', compact('order'));
+    }
 }

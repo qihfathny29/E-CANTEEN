@@ -31,6 +31,8 @@
         .order-total span{color:#4ade80;}
         .thankyou-note{font-size:.76rem;color:var(--text-muted);font-style:italic;}
         .thankyou-note i{margin-right:.25rem;}
+        .btn-struk{display:inline-flex;align-items:center;gap:.35rem;font-family:var(--font-d);font-size:.72rem;font-weight:700;color:var(--text-muted);background:var(--bg-card2);border:1px solid var(--border-md);border-radius:.5rem;padding:.3rem .75rem;text-decoration:none;transition:all .18s;flex-shrink:0;}
+        .btn-struk:hover{color:var(--text);border-color:var(--red);}
 
         /* Pickup banner */
         .pickup-banner{background:rgba(34,197,94,.06);border:1px solid rgba(34,197,94,.18);border-radius:.85rem;padding:.9rem 1.2rem;display:flex;align-items:center;justify-content:space-between;gap:.75rem;margin-bottom:.75rem;flex-wrap:wrap;}
@@ -143,7 +145,9 @@
         </div>
         <div class="order-footer">
             <span class="order-total">Total: <span>Rp {{ number_format($order->total_harga, 0, ',', '.') }}</span></span>
-            <span class="thankyou-note"><i class="fas fa-heart"></i>Terima kasih sudah memesan!</span>
+            <a href="{{ route('user.orders.struk', $order) }}" target="_blank" class="btn-struk">
+                <i class="fas fa-receipt" style="font-size:.65rem;"></i> Unduh Struk
+            </a>
         </div>
     </div>
     @endforeach
