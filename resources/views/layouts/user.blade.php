@@ -98,6 +98,10 @@
         .dropdown-item.danger:hover{background:rgba(192,57,43,.1);color:var(--red-h);}
         .dropdown-item i{width:14px;text-align:center;font-size:.8rem;}
 
+        /* Bell badge */
+        .bell-badge-wrap{position:relative;display:inline-flex;}
+        .bell-badge{position:absolute;top:-5px;right:-5px;min-width:17px;height:17px;background:var(--red);color:white;font-family:var(--font-d);font-size:.58rem;font-weight:700;border-radius:100px;display:flex;align-items:center;justify-content:center;padding:0 4px;pointer-events:none;}
+
         /* Cart badge */
         .cart-badge-wrap{position:relative;display:inline-flex;}
         .cart-badge{position:absolute;top:-5px;right:-5px;min-width:17px;height:17px;background:var(--red);color:white;font-family:var(--font-d);font-size:.58rem;font-weight:700;border-radius:100px;display:none;align-items:center;justify-content:center;padding:0 4px;pointer-events:none;}
@@ -107,9 +111,10 @@
 </head>
 <body>
 @php
-    $navUser     = auth()->user();
-    $nameParts   = explode(' ', $navUser->name);
-    $navInitials = strtoupper(substr($nameParts[0], 0, 1) . (isset($nameParts[1]) ? substr($nameParts[1], 0, 1) : ''));
+    $navUser         = auth()->user();
+    $nameParts       = explode(' ', $navUser->name);
+    $navInitials     = strtoupper(substr($nameParts[0], 0, 1) . (isset($nameParts[1]) ? substr($nameParts[1], 0, 1) : ''));
+    $navUnreadCount  = \App\Models\Notification::where('user_id', $navUser->id)->where('is_read', false)->count();
 @endphp
 
 <div class="app-layout">
@@ -156,6 +161,7 @@
                 <span class="s-icon"><i class="fas fa-wallet"></i></span>
                 <span data-i18n="sidebar.balance">Saldo</span>
             </a>
+
         </nav>
 
         <div class="sidebar-footer">
@@ -187,9 +193,14 @@
                 </button>
 
                 <div class="nav-divider"></div>
-                <button class="icon-btn" title="Notifikasi">
-                    <i class="fas fa-bell"></i>
-                </button>
+                <div class="bell-badge-wrap">
+                    <a href="{{ route('user.notifications.index') }}" class="icon-btn" title="Notifikasi" style="text-decoration:none;">
+                        <i class="fas fa-bell"></i>
+                    </a>
+                    @if($navUnreadCount > 0)
+                        <span class="bell-badge">{{ $navUnreadCount > 9 ? '9+' : $navUnreadCount }}</span>
+                    @endif
+                </div>
 
                 <div class="cart-badge-wrap">
                     <a href="{{ route('user.checkout.index') }}" class="icon-btn" title="Keranjang" style="text-decoration:none;">

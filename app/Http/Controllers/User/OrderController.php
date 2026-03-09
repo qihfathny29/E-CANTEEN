@@ -4,6 +4,7 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use App\Models\Menu;
+use App\Models\Notification;
 use App\Models\Order;
 use App\Models\OrderItem;
 use Illuminate\Http\Request;
@@ -91,11 +92,38 @@ class OrderController extends Controller
     // Riwayat pesanan
     public function index()
     {
-        $orders = Order::with('orderItems.menu')
+        $activeOrders = Order::with('orderItems.menu')
                         ->where('user_id', auth()->id())
+                        ->whereIn('status', ['pending', 'sedang_disiapkan', 'siap_diambil'])
                         ->latest()
                         ->get();
 
-        return view('user.orders.index', compact('orders'));
+        $doneOrders = Order::with('orderItems.menu')
+                        ->where('user_id', auth()->id())
+                        ->where('status', 'selesai')
+                        ->latest()
+                        ->get();
+
+        return view('user.orders.index', compact('activeOrders', 'doneOrders'));
+    }
+
+    // Konfirmasi user sudah mengambil pesanan
+    public function confirmPickup(Order $order)
+    {
+        abort_if($order->user_id !== auth()->id(), 403);
+        abort_if($order->status !== 'siap_diambil', 403);
+
+        $order->update(['status' => 'selesai']);
+
+        Notification::create([
+            'user_id'  => $order->user_id,
+            'order_id' => $order->id,
+            'title'    => 'Pesanan Selesai ✅',
+            'message'  => 'Terima kasih sudah memesan! Sampai jumpa lagi 😊',
+            'is_read'  => false,
+        ]);
+
+        return redirect()->route('user.orders.index')
+                         ->with('success', 'Pesanan selesai! Terima kasih 😊');
     }
 }

@@ -45,6 +45,7 @@
         .form-select-sm{background:var(--input-bg);border:1px solid var(--border-md);border-radius:.5rem;color:var(--text);padding:.38rem .75rem;font-size:.8rem;font-family:var(--font-b);outline:none;cursor:pointer;appearance:none;padding-right:2rem;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='rgba(255,255,255,0.4)' stroke-width='2.5'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right .65rem center;transition:border .2s;}
         .form-select-sm:focus{border-color:rgba(192,57,43,.6);}
         html[data-theme="light"] .form-select-sm{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='rgba(0,0,0,0.4)' stroke-width='2.5'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");}
+        select option{background:#1c1c1c;color:#e0e0e0;}
         html[data-theme="light"] select option{background:#ffffff;color:#0f0f0f;}
         .btn-update{display:inline-flex;align-items:center;gap:.35rem;font-family:var(--font-d);font-size:.8rem;font-weight:700;color:white;background:var(--red);border:none;border-radius:.5rem;padding:.38rem .95rem;cursor:pointer;transition:all .2s;}
         .btn-update:hover{background:var(--red-h);}
@@ -125,7 +126,6 @@
                     <option value="pending"           {{ $order->status === 'pending'           ? 'selected' : '' }}>Pending</option>
                     <option value="sedang_disiapkan"  {{ $order->status === 'sedang_disiapkan'  ? 'selected' : '' }}>Sedang Disiapkan</option>
                     <option value="siap_diambil"      {{ $order->status === 'siap_diambil'      ? 'selected' : '' }}>Siap Diambil</option>
-                    <option value="selesai"           {{ $order->status === 'selesai'           ? 'selected' : '' }}>Selesai</option>
                 </select>
                 <button type="submit" class="btn-update">
                     <i class="fas fa-arrow-right"></i> Update

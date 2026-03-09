@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 @section('title', 'Profil Saya')
 @section('page-styles')
-        .page-wrap{max-width:680px;margin:0 auto;padding:2rem;}
+        .page-wrap{padding:2rem;}
         .page-header{margin-bottom:1.75rem;}
         .page-header h1{font-family:var(--font-d);font-size:1.4rem;font-weight:800;color:var(--text);letter-spacing:-.03em;}
         .page-header p{font-size:.85rem;color:var(--text-muted);margin-top:.25rem;}

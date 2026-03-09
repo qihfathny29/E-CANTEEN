@@ -8,6 +8,7 @@ use App\Http\Controllers\User\OrderController as UserOrderController;
 use App\Http\Controllers\User\SaldoController as UserSaldoController;
 use App\Http\Controllers\User\CheckoutController as UserCheckoutController;
 use App\Http\Controllers\User\ProfileController as UserProfileController;
+use App\Http\Controllers\User\NotificationController as UserNotificationController;
 use App\Http\Controllers\Admin\MenuController;
 use App\Http\Controllers\Admin\AntreanController;
 use App\Http\Controllers\Admin\LaporanController;
@@ -53,6 +54,7 @@ Route::prefix('user')->middleware(['auth', 'user'])->group(function () {
     Route::get('/order', [UserOrderController::class, 'create'])->name('user.orders.create');
     Route::post('/order', [UserOrderController::class, 'store'])->name('user.orders.store');
     Route::get('/riwayat', [UserOrderController::class, 'index'])->name('user.orders.index');
+    Route::post('/riwayat/{order}/pickup', [UserOrderController::class, 'confirmPickup'])->name('user.orders.confirmPickup');
 
     // Saldo
     Route::get('/saldo', [UserSaldoController::class, 'index'])->name('user.saldo.index');
@@ -65,6 +67,9 @@ Route::prefix('user')->middleware(['auth', 'user'])->group(function () {
     // Profile
     Route::get('/profile', [UserProfileController::class, 'show'])->name('user.profile');
     Route::post('/profile', [UserProfileController::class, 'update'])->name('user.profile.update');
+
+    // Notifications
+    Route::get('/notifications', [UserNotificationController::class, 'index'])->name('user.notifications.index');
 });
 
 require __DIR__.'/auth.php';

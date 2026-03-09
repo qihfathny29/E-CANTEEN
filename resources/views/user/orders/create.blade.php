@@ -2,7 +2,7 @@
 @section('title', 'Pre-Order')
 
 @section('page-styles')
-        .page-wrap{max-width:680px;margin:0 auto;padding:2rem;}
+        .page-wrap{padding:2rem;}
         .page-header{margin-bottom:1.75rem;}
         .page-header h1{font-family:var(--font-d);font-size:1.4rem;font-weight:800;color:var(--text);letter-spacing:-.03em;}
         .saldo-badge{display:inline-flex;align-items:center;gap:.4rem;font-family:var(--font-d);font-size:.82rem;font-weight:700;background:rgba(74,222,128,.1);color:#4ade80;border:1px solid rgba(74,222,128,.25);padding:.3rem .8rem;border-radius:100px;margin-top:.6rem;}
