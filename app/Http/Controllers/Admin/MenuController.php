@@ -12,7 +12,7 @@ class MenuController extends Controller
     // Tampilkan semua menu
     public function index()
     {
-        $menus = Menu::latest()->paginate(10);
+        $menus = Menu::latest()->paginate(5);
         return view('admin.menus.index', compact('menus'));
     }
 

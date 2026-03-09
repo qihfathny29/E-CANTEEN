@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 @section('title', 'Kelola Menu')
 @section('page-styles')
-        .page-wrap{max-width:1100px;margin:0 auto;padding:2rem;}
+        .page-wrap{padding:2rem;}
         .page-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:1.5rem;flex-wrap:wrap;gap:1rem;}
         .page-header h1{font-family:var(--font-d);font-size:1.4rem;font-weight:800;color:var(--text);letter-spacing:-.03em;}
         .page-header p{font-size:.85rem;color:var(--text-muted);margin-top:.25rem;}
@@ -45,7 +45,7 @@
         .empty-state p{font-size:.9rem;color:var(--text-muted);}
 
         /* PAGINATION */
-        .pag-wrap{padding:1rem 1.1rem;border-top:1px solid var(--border);display:flex;gap:.3rem;align-items:center;}
+        .pag-wrap{padding:1rem 1.1rem;border-top:1px solid var(--border);display:flex;gap:.3rem;align-items:center;justify-content:center;}
         .pag-btn{display:inline-flex;align-items:center;justify-content:center;font-family:var(--font-d);font-size:.8rem;font-weight:600;min-width:34px;height:34px;padding:0 .5rem;border-radius:.4rem;text-decoration:none;transition:all .2s;border:1px solid var(--border-md);color:var(--text-sub);background:var(--bg-card2);}
         .pag-btn:hover{color:var(--text);border-color:var(--red);}
         .pag-btn.active{background:var(--red);color:white;border-color:var(--red);}

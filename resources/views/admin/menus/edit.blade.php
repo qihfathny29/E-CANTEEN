@@ -2,7 +2,7 @@
 @section('title', 'Edit Menu')
 @section('page-styles')
         /* PAGE */
-        .page-wrap{max-width:640px;margin:0 auto;padding:2rem;}
+        .page-wrap{padding:2rem;}
         .page-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:1.75rem;flex-wrap:wrap;gap:1rem;}
         .page-header h1{font-family:var(--font-d);font-size:1.4rem;font-weight:800;color:var(--text);letter-spacing:-.03em;}
         .page-header p{font-size:.85rem;color:var(--text-muted);margin-top:.25rem;}
